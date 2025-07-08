@@ -96,27 +96,33 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-4">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center py-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-white mb-2">
             REQUEST MONITOR
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-300">
             Мониторинг запросов в реальном времени
           </p>
         </div>
 
         {/* Status Bar */}
         <div className="flex justify-center gap-4 mb-6">
-          <Badge variant="outline" className="px-4 py-2">
+          <Badge
+            variant="outline"
+            className="px-4 py-2 bg-gray-800 text-gray-200 border-gray-700"
+          >
             <div
               className={`w-2 h-2 rounded-full ${getStatusColor(nginxStatus)} mr-2`}
             ></div>
             Nginx: {getStatusText(nginxStatus)}
           </Badge>
-          <Badge variant="outline" className="px-4 py-2">
+          <Badge
+            variant="outline"
+            className="px-4 py-2 bg-gray-800 text-gray-200 border-gray-700"
+          >
             <div
               className={`w-2 h-2 rounded-full ${getStatusColor(dbStatus)} mr-2`}
             ></div>
@@ -126,49 +132,49 @@ const Index = () => {
 
         {/* Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="text-center">
+          <Card className="text-center bg-gray-800 border-gray-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-500">
+              <CardTitle className="text-sm font-medium text-gray-400">
                 Текущее RPS
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-blue-600">
+              <div className="text-3xl font-bold text-blue-400">
                 {currentRps}
               </div>
-              <p className="text-sm text-gray-500 mt-1">запросов/сек</p>
+              <p className="text-sm text-gray-400 mt-1">запросов/сек</p>
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center bg-gray-800 border-gray-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-500">
+              <CardTitle className="text-sm font-medium text-gray-400">
                 Пиковое RPS
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-red-600">{peakRps}</div>
-              <p className="text-sm text-gray-500 mt-1">максимум за сессию</p>
+              <div className="text-3xl font-bold text-red-400">{peakRps}</div>
+              <p className="text-sm text-gray-400 mt-1">максимум за сессию</p>
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center bg-gray-800 border-gray-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-500">
+              <CardTitle className="text-sm font-medium text-gray-400">
                 Среднее RPS
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-green-600">{avgRps}</div>
-              <p className="text-sm text-gray-500 mt-1">среднее значение</p>
+              <div className="text-3xl font-bold text-green-400">{avgRps}</div>
+              <p className="text-sm text-gray-400 mt-1">среднее значение</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Main Chart */}
-        <Card className="w-full">
+        <Card className="w-full bg-gray-800 border-gray-700">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-gray-200">
               <Icon name="BarChart3" size={20} />
               Запросы в секунду
             </CardTitle>
@@ -177,24 +183,29 @@ const Index = () => {
             <div className="h-96">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="#374151"
+                    className="opacity-50"
+                  />
                   <XAxis
                     dataKey="time"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 12, fill: "#64748b" }}
+                    tick={{ fontSize: 12, fill: "#9ca3af" }}
                   />
                   <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 12, fill: "#64748b" }}
+                    tick={{ fontSize: 12, fill: "#9ca3af" }}
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "white",
-                      border: "1px solid #e2e8f0",
+                      backgroundColor: "#1f2937",
+                      border: "1px solid #374151",
                       borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.3)",
+                      color: "#f3f4f6",
                     }}
                   />
                   <Line
@@ -203,7 +214,7 @@ const Index = () => {
                     stroke="url(#gradient)"
                     strokeWidth={3}
                     dot={false}
-                    activeDot={{ r: 6, fill: "#2563eb", strokeWidth: 2 }}
+                    activeDot={{ r: 6, fill: "#60a5fa", strokeWidth: 2 }}
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     connectNulls={true}
@@ -212,7 +223,7 @@ const Index = () => {
                   />
                   <defs>
                     <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#2563eb" />
+                      <stop offset="0%" stopColor="#3b82f6" />
                       <stop offset="100%" stopColor="#06b6d4" />
                     </linearGradient>
                   </defs>
@@ -224,7 +235,7 @@ const Index = () => {
 
         {/* Footer */}
         <div className="text-center py-4">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-400">
             Обновление каждую секунду • Последнее обновление:{" "}
             {new Date().toLocaleTimeString("ru-RU", { hour12: false })}
           </p>
