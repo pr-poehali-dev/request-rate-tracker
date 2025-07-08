@@ -34,7 +34,14 @@ const Index = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       const now = new Date();
-      const rps = Math.floor(Math.random() * 100) + 20; // Случайные значения от 20 до 120
+      // Генерируем более плавные данные с синусоидальными колебаниями
+      const baseRps = 60;
+      const variation = 30;
+      const timeOffset = now.getTime() / 10000; // Медленные изменения
+      const noise = (Math.random() - 0.5) * 10; // Небольшой шум
+      const rps = Math.floor(
+        baseRps + Math.sin(timeOffset) * variation + noise,
+      );
       const newPoint: DataPoint = {
         time: now.toLocaleTimeString("ru-RU", { hour12: false }),
         rps,
@@ -195,8 +202,13 @@ const Index = () => {
                     dataKey="rps"
                     stroke="url(#gradient)"
                     strokeWidth={3}
-                    dot={{ fill: "#2563eb", strokeWidth: 2, r: 4 }}
-                    activeDot={{ r: 6, fill: "#2563eb" }}
+                    dot={false}
+                    activeDot={{ r: 6, fill: "#2563eb", strokeWidth: 2 }}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    connectNulls={true}
+                    animationDuration={800}
+                    animationEasing="ease-in-out"
                   />
                   <defs>
                     <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
